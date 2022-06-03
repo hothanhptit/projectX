@@ -11,7 +11,7 @@ import {
   TypeOrmModuleOptions,
 } from '@nestjs/typeorm';
 import { ConfigService } from './structures/config/config.service';
-import { User } from './modules/users/entities/user.entity';
+import { Users } from './modules/users/entities/user.entity';
 
 // apollo driver
 const graphqlOptions: GqlModuleAsyncOptions = {
@@ -42,7 +42,7 @@ const typeOrmOptions: TypeOrmModuleAsyncOptions[] = [
       port: Number(config.get('MYSQL_PORT')),
       synchronize: config.get('SYNC_ENTITIES') == 'true',
       autoLoadEntities: config.get('AUTO_LOAD_ENTITIES') == 'true',
-      entities: [User],
+      entities: [Users],
     }),
   },
 ];

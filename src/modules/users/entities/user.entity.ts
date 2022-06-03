@@ -1,21 +1,28 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Field, ID, InputType, Int, ObjectType } from '@nestjs/graphql';
+import { Node } from 'src/modules/nodes';
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('user', { schema: 'projectx' })
-@ObjectType()
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
+// @Index('username', ['username'], {})
+// @Index('password', ['password'], {})
+// @Entity('users', { schema: 'projectX' })
+// @ObjectType({ implements: Node })
+// @InputType()
+@ObjectType('Users')
+@InputType('UserInput')
+@Entity('users')
+export class Users {
   @Field()
-  firstName: string;
+  @PrimaryGeneratedColumn({ type: 'bigint', name: 'id' })
+  id: string
 
-  @Field()
-  @Column()
-  lastName: string;
+  @Column('varchar', { name: 'username' })
+  @Field(() => String, { name: 'username' })
+  username: string;
 
-  @Field()
-  @Column({ default: true })
-  isActive: boolean;
+  @Column('varchar', { name: 'password' })
+  @Field(() => String, { name: 'password' })
+  password: string;
+
+  // @Column({ default: true })
+  // isActive: boolean;
 }

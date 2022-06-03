@@ -2,17 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  firstName: String!
-  lastName: String!
-  isActive: Boolean!
+type Users {
+  id: String!
+  username: String!
+  password: String!
+}
+
+input UserInput {
+  id: String!
+  username: String!
+  password: String!
 }
 
 type Query {
-  users: [User!]!
-  user(id: Int!): User!
+  users: [Users!]!
 }
 
 type Mutation {
-  removeUser(id: Int!): User!
+  createUser(createUser: UserInput!): Users!
 }
