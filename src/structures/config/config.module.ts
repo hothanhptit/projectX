@@ -1,14 +1,25 @@
-import { Global, Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { DynamicModule, Global, Module } from '@nestjs/common';
+import { ConfigService } from './config.service';
+import { CONFIG_OPTIONS } from './constants';
 
-import { Config } from './config';
-import { SettingService } from './setting.service';
-import { SystemSetting } from './system-setting.entity';
+export interface ConfigModuleOptions {
+  folder: string;
+}
 
 @Global()
-@Module({
-  providers: [Config, SettingService],
-  exports: [Config, SettingService],
-  imports: [TypeOrmModule.forFeature([SystemSetting])],
-})
-export class ConfigModule {}
+@Module({})
+export class ConfigModule {
+  static register(options: ConfigModuleOptions): DynamicModule {
+    return {
+      module: ConfigModule,
+      providers: [
+        {
+          provide: CONFIG_OPTIONS,
+          useValue: options,
+        },
+        ConfigService,
+      ],
+      exports: [ConfigService],
+    };
+  }
+}
